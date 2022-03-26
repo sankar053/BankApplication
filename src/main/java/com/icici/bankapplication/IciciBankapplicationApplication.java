@@ -8,6 +8,11 @@ public class IciciBankapplicationApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(IciciBankapplicationApplication.class, args);
+		
+		System.out.println("new line");
 	}
 
+	
+	
+	
 }
