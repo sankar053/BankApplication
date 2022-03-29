@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.icici.bankapplication.dao.AccountDao;
 import com.icici.bankapplication.dto.Account;
 import com.icici.bankapplication.service.BankingService;
 
@@ -35,7 +36,7 @@ public class AccountCreationController {
 	@GetMapping("/getAll")
 	public ResponseEntity<?> getAll() {
 
-		List<Account> accList = bankingService.getAll();
+		List<AccountDao> accList = bankingService.getAll();
 		if(accList.isEmpty())
 			new ResponseEntity("No Data Found", HttpStatus.NOT_FOUND);
 		

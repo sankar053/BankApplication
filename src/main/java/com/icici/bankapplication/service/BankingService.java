@@ -5,6 +5,7 @@ package com.icici.bankapplication.service;
 
 import java.util.List;
 
+import com.icici.bankapplication.dao.AccountDao;
 import com.icici.bankapplication.dto.Account;
 
 /**
@@ -20,7 +21,7 @@ public interface BankingService {
 	
 	Account getByAccountNo(String acctNo);
 	
-	List<Account> getAll();
+	List<AccountDao> getAll();
 	
 	Account update(Account ac);
 

@@ -5,12 +5,13 @@ package com.icici.bankapplication.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
-import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.icici.bankapplication.dao.AccountDao;
 import com.icici.bankapplication.dto.Account;
+import com.icici.bankapplication.repo.AccountRepo;
 import com.icici.bankapplication.service.BankingService;
 
 /**
@@ -21,12 +22,23 @@ import com.icici.bankapplication.service.BankingService;
 public class BankingServiceImpl implements BankingService {
 
 	private List<Account> al = new ArrayList<>();
+	
+	@Autowired
+	AccountRepo accountRepo;
 
 	@Override
 	public Account create(Account ac) {
 		// TODO Auto-generated method stub
 		ac.setAccountNo("9204" + Math.random());
 		al.add(ac);
+		
+		AccountDao accountDao =new AccountDao();
+		accountDao.setAccountBal(ac.getAccountBal());
+		accountDao.setAccountName(ac.getAccountName());
+		accountDao.setAccountNo(ac.getAccountNo());
+		accountDao.setDob(ac.getDob());
+		
+		accountRepo.save(accountDao);
 		return ac;
 	}
 
@@ -65,9 +77,9 @@ public class BankingServiceImpl implements BankingService {
 	}
 
 	@Override
-	public List<Account> getAll() {
+	public List<AccountDao> getAll() {
 		// TODO Auto-generated method stub
-		return al;
+		return accountRepo.findAll();
 	}
 
 	@Override
