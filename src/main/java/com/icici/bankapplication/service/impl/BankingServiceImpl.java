@@ -43,37 +43,18 @@ public class BankingServiceImpl implements BankingService {
 	}
 
 	@Override
-	public boolean delete(String acctNo) {
+	public boolean delete(Long acctNo) {
 		// TODO Auto-generated method stub
 
-		if (!al.isEmpty()) {
-			int index = 0;
-			for (Account acc : al) {
-
-				if (acc.getAccountNo().equalsIgnoreCase(acctNo)) {
-					al.remove(index);
-					return true;
-				}
-				index++;
-			}
-		}
-		return false;
+		accountRepo.deleteById(acctNo);
+		return true;
 	}
 
 	@Override
-	public Account getByAccountNo(String acctNo) {
+	public AccountDao getByAccountNo(String acctNo,String dob) {
 		// TODO Auto-generated method stub
-		if (!al.isEmpty()) {
-			int index = 0;
-			for (Account acc : al) {
-
-				if (acc.getAccountNo().equalsIgnoreCase(acctNo)) {
-					return al.get(index);
-				}
-				index++;
-			}
-		}
-		return null;
+		return accountRepo.findByAccountNoAndDob(acctNo,dob);
+		
 	}
 
 	@Override
@@ -83,21 +64,17 @@ public class BankingServiceImpl implements BankingService {
 	}
 
 	@Override
-	public Account update(Account ac) {
+	public AccountDao update(Account ac) {
 		// TODO Auto-generated method stub
-		if (!al.isEmpty()) {
-			int index = 0;
-			for (Account acc : al) {
-
-				if (acc.getAccountNo().equalsIgnoreCase(ac.getAccountNo())) {
-					Account old = al.get(index);
-					old.setAccountName(ac.getAccountName());
-					return old;
-				}
-				index++;
-			}
-		}
-		return null;
+		AccountDao accountDao =new AccountDao();
+		accountDao.setId(ac.getId());
+		accountDao.setAccountBal(ac.getAccountBal());
+		accountDao.setAccountName(ac.getAccountName());
+	
+		accountDao.setDob(ac.getDob());
+		
+		return accountRepo.save(accountDao);
+		
 	}
 
 }

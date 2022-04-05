@@ -17,12 +17,12 @@ public interface BankingService {
 	
 	Account create(Account ac);
 	
-	boolean delete(String acctNo);
+	boolean delete(Long acctNo);
 	
-	Account getByAccountNo(String acctNo);
+	AccountDao getByAccountNo(String acctNo,String dob);
 	
 	List<AccountDao> getAll();
 	
-	Account update(Account ac);
+	AccountDao update(Account ac);
 
 }

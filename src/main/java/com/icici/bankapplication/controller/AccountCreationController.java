@@ -5,6 +5,8 @@ package com.icici.bankapplication.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,9 +45,10 @@ public class AccountCreationController {
 		return new ResponseEntity(accList, HttpStatus.OK);
 	}
 
-	@GetMapping("/getAccountNo/{accNo}")
-	public ResponseEntity<?> myAcccout(@PathVariable(name = "accNo", required = true) String accNo) {
-		Account accountDao = bankingService.getByAccountNo(accNo);
+	@GetMapping("/getAccountNo/{accNo}/{dob}")
+	public ResponseEntity<?> myAcccout(@PathVariable(name = "accNo", required = true) String accNo,
+			@PathVariable(name = "dob", required = true) String dob) {
+		AccountDao accountDao = bankingService.getByAccountNo(accNo,dob);
 		return ResponseEntity.ok(accountDao);
 	}
 
@@ -53,8 +56,9 @@ public class AccountCreationController {
 
 
 	@PostMapping
-	public ResponseEntity<?> CreateAccount(@RequestBody Account accDto) {
+	public ResponseEntity<?> CreateAccount(@Valid @RequestBody Account accDto) {
 
+		
 		Account accDao = bankingService.create(accDto);
 
 		ResponseEntity<Account> rs = new ResponseEntity(accDao, HttpStatus.OK);
@@ -64,9 +68,9 @@ public class AccountCreationController {
 	}
 
 	@PutMapping
-	public ResponseEntity<?> updateAccount(@RequestBody Account acDto) {
+	public ResponseEntity<?> updateAccount(@Valid @RequestBody Account acDto) {
 
-		Account accDao = bankingService.update(acDto);
+		AccountDao accDao = bankingService.update(acDto);
 		ResponseEntity<Account> rs = new ResponseEntity(accDao, HttpStatus.OK);
 
 		return rs;
@@ -76,9 +80,9 @@ public class AccountCreationController {
 
 
 	@DeleteMapping
-	public ResponseEntity<?> deleteAccount(@RequestParam String accNo) {
+	public ResponseEntity<?> deleteAccount(@RequestParam Long accId) {
 
-		Boolean flag = bankingService.delete(accNo);
+		Boolean flag = bankingService.delete(accId);
 		if (flag) {
 			return new ResponseEntity("Deleted SuccessFully", HttpStatus.OK);
 		}
